@@ -1,24 +1,13 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import type { NextApiRequest, NextApiResponse } from "next";
+import type { NextApiResponse, NextApiRequest } from "next";
+import type { Dog } from "@/utils/types";
 
-type Data = {
-  name: string;
-};
-
-type Dog = {
-  name: string;
-  age: number;
-  nicknames: string[];
-  isFluffy: boolean;
-  size: "tiny" | "small" | "medium" | "large" | "chonky";
-};
 const MAX_DOG_AGE = 20;
 
 const generateDogs = (amount: number): Dog[] => {
   const names = ["Fluffy", "Bella", "Mel", "Bob", "Courage"];
   const nicknames = ["Cutie", "Stinky", "Doggie", "Pain in the ass"];
   const sizes: Dog["size"][] = ["tiny", "small", "medium", "large", "chonky"];
-
   const dogs: Dog[] = [];
   const randomWithinRange = (range: number): number => {
     return Math.floor(Math.random() * range + 1);
@@ -35,6 +24,6 @@ const generateDogs = (amount: number): Dog[] => {
   return dogs;
 };
 
-export default function handler(res: NextApiResponse<Dog[]>) {
+export default function handler(req: NextApiRequest, res: NextApiResponse<Dog[]>) {
   res.status(200).json(generateDogs(20));
 }
